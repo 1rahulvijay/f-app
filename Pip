@@ -1,0 +1,9 @@
+pip uninstall flask-appbuilder marshmallow-sqlalchemy
+
+pip install flask flask-cors flask-sqlalchemy flask-socketio oracledb gunicorn sqlalchemy>=2.0
+
+
+pip install --upgrade flask-appbuilder
+
+
+pip install marshmallow-sqlalchemy>=1.0
