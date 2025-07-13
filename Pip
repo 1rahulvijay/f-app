@@ -7,3 +7,14 @@ pip install --upgrade flask-appbuilder
 
 
 pip install marshmallow-sqlalchemy>=1.0
+
+
+from sqlalchemy import create_engine
+engine = create_engine("oracle+oracledb://user1:pass1@host1:port1/service1")
+with engine.connect() as conn:
+    result = conn.execute("SELECT 1 FROM DUAL").fetchall()
+    print(result)
+
+
+pip uninstall flask flask-cors flask-sqlalchemy flask-socketio oracledb gunicorn sqlalchemy cx_Oracle
+pip install flask==3.0.3 flask-cors==5.0.0 flask-sqlalchemy==3.1.1 flask-socketio==5.3.6 oracledb==2.3.0 gunicorn==23.0.0 sqlalchemy==2.0.41
