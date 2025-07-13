@@ -18,3 +18,7 @@ with engine.connect() as conn:
 
 pip uninstall flask flask-cors flask-sqlalchemy flask-socketio oracledb gunicorn sqlalchemy cx_Oracle
 pip install flask==3.0.3 flask-cors==5.0.0 flask-sqlalchemy==3.1.1 flask-socketio==5.3.6 oracledb==2.3.0 gunicorn==23.0.0 sqlalchemy==2.0.41
+
+
+pip uninstall flask flask-cors flask-sqlalchemy flask-socketio oracledb gunicorn sqlalchemy cx_Oracle flask-appbuilder apache-airflow-providers-fab
+pip install -r requirements.txt
