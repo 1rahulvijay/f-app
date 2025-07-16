@@ -37,3 +37,5 @@ BEGIN
     :NEW.id := DGM.ICM_COMMENTS_SEQ.NEXTVAL;
 END;
 /
+
+id = db.Column(db.Integer, primary_key=True, autoincrement=False)
