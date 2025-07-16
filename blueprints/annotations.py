@@ -1,15 +1,15 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request, jsonify
 from flask_socketio import emit
-from .. import db, socketio, logger
-from ..models.comment import Comment
+from __init__ import db, socketio
+from model import Comment
+import logging
 
 annotations_bp = Blueprint('annotations', __name__)
 
-@socketio.on('connect', namespace='/annotations')
-def handle_connect():
-    logger.info("Client connected to /annotations namespace")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-@annotations_bp.route('/api/annotations', methods=['GET', 'POST'])
+@annotations_bp.route('/annotations', methods=['GET', 'POST'])
 def handle_comments():
     try:
         if request.method == 'POST':
@@ -70,3 +70,7 @@ def handle_comments():
         logger.error(f"Error handling comments: {e}")
         db.session.rollback()
         return jsonify({"error": "Failed to handle comments"}), 500
+
+@socketio.on('connect', namespace='/annotations')
+def handle_connect():
+    logger.info("Client connected to /annotations namespace")
