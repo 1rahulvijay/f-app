@@ -39,3 +39,34 @@ END;
 /
 
 id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+
+
+
+import cx_Oracle
+
+# Get 3000 IDs from PROD
+prod_conn = cx_Oracle.connect(user="prod_user", password="prod_pass", dsn="prod_dsn")
+with prod_conn.cursor() as cur:
+    cur.execute("SELECT id FROM prod_table")
+    ids_to_exclude = [row[0] for row in cur.fetchall()]
+prod_conn.close()
+
+# Load SQL file
+with open("sum_excluding_ids.sql", "r") as f:
+    sql_template = f.read()
+
+# Generate the CTE for excluded IDs (using bind variables)
+cte_rows = "\nUNION ALL\n".join([f"SELECT :{i+1} AS id FROM dual" for i in range(len(ids_to_exclude))])
+excluded_ids_cte = f"WITH excluded_ids AS (\n{cte_rows}\n)"
+
+# Replace placeholder in SQL file
+final_sql = sql_template.replace("__EXCLUDED_IDS_CTE__", excluded_ids_cte)
+
+# Execute in DEV
+dev_conn = cx_Oracle.connect(user="dev_user", password="dev_pass", dsn="dev_dsn")
+with dev_conn.cursor() as cur:
+    cur.execute(final_sql, ids_to_exclude)
+    sum_col1, sum_col2 = cur.fetchone()
+    print("Sum of col1:", sum_col1)
+    print("Sum of col2:", sum_col2)
+dev_conn.close()
