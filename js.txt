@@ -1,0 +1,22 @@
+dashboard/
+├── index.js                    # Entry point
+├── config/
+│   └── chartConfig.js          # Constants and config objects
+├── utils/
+│   ├── themeManager.js         # Theme switching, localStorage
+│   ├── dimensions.js           # Responsive logic
+│   ├── dataFetcher.js          # fetchData logic
+│   └── domUtils.js             # createTooltip, showError, etc.
+├── charts/
+│   ├── index.js                # drawCharts() dispatcher
+│   ├── base.js                 # createChartBase, createGradient, etc.
+│   ├── lineChart.js
+│   ├── barChart.js
+│   ├── scatterChart.js
+│   ├── lollipopChart.js
+│   └── sankeyChart.js
+├── exports/
+│   ├── pdfExport.js
+│   └── excelExport.js
+└── styles/
+    └── dashboard.css           # Theme CSS variables, chart styles
