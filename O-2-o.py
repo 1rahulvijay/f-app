@@ -53,3 +53,29 @@ class OracleExcelTransfer:
     def close(self):
         self.src_conn.close()
         self.dst_conn.close()
+
+
+
+src_config = {
+    "user": "src_user",
+    "password": "src_pass",
+    "dsn": "src_host:1521/src_service"
+}
+
+dst_config = {
+    "user": "dst_user",
+    "password": "dst_pass",
+    "dsn": "dst_host:1521/dst_service"
+}
+
+transfer = OracleExcelTransfer(
+    src_config,
+    dst_config,
+    excel_path="lookup_data.xlsx",
+    excel_key="Excel_Column_Name",
+    batch_size=50_000
+)
+
+# Join source table column "CUSTOMER_ID" with Excel column "Excel_Column_Name"
+transfer.transfer_with_excel_join("CUSTOMERS", join_key="CUSTOMER_ID", dst_table="CUSTOMERS_WITH_EXTRA")
+transfer.close()
